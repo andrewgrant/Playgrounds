@@ -4,7 +4,6 @@ import UIKit
 
 var str = "Hello, playground"
 
-
 // Single param, no return
 func sayHello(name: String,
     handler: (String) -> Void)
@@ -13,12 +12,17 @@ func sayHello(name: String,
 }
 
 // inline format
-sayHello("Bob", { (newString) -> Void in
+sayHello("Bob", handler: { (newString) -> Void in
     let str1 = newString
 })
 
 // trailing format
 sayHello("Bob") { (newString) -> Void in
+    let str = newString
+}
+
+// trailing with types omitted
+sayHello("Frank") { newString in
     let str = newString
 }
 
@@ -43,14 +47,14 @@ func sayHelloMaybeTwice(name: String, handler : (String, NSDate) -> Bool) {
     }
 }
 
-sayHelloMaybeTwice("John", { (newString, newDate) -> Bool in
+sayHelloMaybeTwice("John", handler: { (newString, newDate) -> Bool in
     let str = newString
     let date = newDate
     return false
 })
 
 
-sayHelloMaybeTwice("John", { (newString, newDate) -> Bool in
+sayHelloMaybeTwice("John", handler: { (newString, newDate) -> Bool in
     let str = newString
     let date = newDate
     return true
@@ -63,14 +67,14 @@ func sayHelloAndGoodbye(name : String, first : (String) -> Void, second : (Strin
 }
 
 // inline
-sayHelloAndGoodbye("Jim", { (newString) -> Void in
+sayHelloAndGoodbye("Jim", first: { (newString) -> Void in
     let str = newString
 }) { (newString) -> Void in
     let str = newString
 }
 
 // trailing (seems only last closure can trail? Makes sense)
-sayHelloAndGoodbye("Frank", { (newString) -> Void in
+sayHelloAndGoodbye("Frank", first: { (newString) -> Void in
     let str = newString
 })
 { (newString) -> Void in

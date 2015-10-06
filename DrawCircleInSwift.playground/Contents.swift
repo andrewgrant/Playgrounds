@@ -14,7 +14,7 @@ func drawCircle(context : CGContext, bounds : CGRect, color : CGColorRef, filled
         CGContextFillEllipseInRect(context, bounds)
     }
     else {
-        var inner = bounds.rectByInsetting(dx: lineWidth / 2, dy: lineWidth / 2)
+        let inner = bounds.insetBy(dx: lineWidth / 2, dy: lineWidth / 2)
         CGContextSetLineWidth(context, lineWidth)
         CGContextSetStrokeColorWithColor(context, color)
         CGContextStrokeEllipseInRect(context, inner)
@@ -27,16 +27,16 @@ let bounds = CGRect(x: 0, y: 0, width: 32, height: 32)
 
 UIGraphicsBeginImageContext(bounds.size)
 
-let ctx = UIGraphicsGetCurrentContext()
+let ctx = UIGraphicsGetCurrentContext()!
 
 UIColor.clearColor().set()
 
 CGContextFillRect(ctx, bounds)
 
-drawCircle(ctx, bounds, UIColor.greenColor().CGColor, filled: false, lineWidth: 4.0)
+drawCircle(ctx, bounds: bounds, color: UIColor.greenColor().CGColor, filled: false, lineWidth: 4.0)
 
-let inset = bounds.rectByInsetting(dx: (bounds.size.width / 4), dy: (bounds.size.height / 4))
-drawCircle(ctx, inset, UIColor.greenColor().CGColor, filled: true)
+let inset = bounds.insetBy(dx: (bounds.size.width / 4), dy: (bounds.size.height / 4))
+drawCircle(ctx, bounds: inset, color: UIColor.greenColor().CGColor, filled: true)
 
 
 let img = UIGraphicsGetImageFromCurrentImageContext()
@@ -49,16 +49,16 @@ func stateImageForColor(bounds : CGRect, color : UIColor, checked : Bool) -> UII
     
     UIGraphicsBeginImageContext(bounds.size)
     
-    let ctx = UIGraphicsGetCurrentContext()
+    let ctx = UIGraphicsGetCurrentContext()!
     
     UIColor.clearColor().set()
     
     CGContextFillRect(ctx, bounds)
     
-    drawCircle(ctx, bounds, color.CGColor, filled: false, lineWidth: 4.0)
+    drawCircle(ctx, bounds: bounds, color: color.CGColor, filled: false, lineWidth: 4.0)
     
-    let inset = bounds.rectByInsetting(dx: (bounds.size.width / 4), dy: (bounds.size.height / 4))
-    drawCircle(ctx, inset, color.CGColor, filled: true)
+    let inset = bounds.insetBy(dx: (bounds.size.width / 4), dy: (bounds.size.height / 4))
+    drawCircle(ctx, bounds: inset, color: color.CGColor, filled: true)
     
     
     let img = UIGraphicsGetImageFromCurrentImageContext()
@@ -68,4 +68,4 @@ func stateImageForColor(bounds : CGRect, color : UIColor, checked : Bool) -> UII
     return img
 }
 
-let img2 = stateImageForColor(bounds, UIColor.redColor(), false)
+let img2 = stateImageForColor(bounds, color: UIColor.redColor(), checked: false)
